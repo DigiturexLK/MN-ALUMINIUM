@@ -1,0 +1,11 @@
+const menu = document.querySelector('.menu');
+const nav = document.querySelector('#navigation');
+menu.addEventListener('click', () => { const open = nav.classList.toggle('open'); menu.setAttribute('aria-expanded', String(open)); menu.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation'); menu.textContent = open ? '×' : '☰'; });
+nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => { nav.classList.remove('open'); menu.setAttribute('aria-expanded', 'false'); menu.setAttribute('aria-label', 'Open navigation'); menu.textContent = '☰'; }));
+document.querySelectorAll('[data-service]').forEach(link => link.addEventListener('click', () => { document.querySelector('#service').value = link.dataset.service; }));
+const gallery = document.querySelector('#gallery');
+document.querySelectorAll('[data-photo]').forEach(button => button.addEventListener('click', () => { gallery.querySelector('img').src = button.dataset.photo; gallery.querySelector('img').alt = button.dataset.caption; gallery.querySelector('p').textContent = button.dataset.caption; gallery.showModal(); }));
+gallery.querySelector('.close').addEventListener('click', () => gallery.close());
+gallery.addEventListener('click', event => { if (event.target === gallery) { const box = gallery.getBoundingClientRect(); if(event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) gallery.close(); } });
+document.querySelector('#enquiry').addEventListener('submit', event => { event.preventDefault(); const data = new FormData(event.currentTarget); const message = `Hello M. N. Aluminium Fabricators!\n\nMy name: ${data.get('name').trim()}\nLocation: ${data.get('location').trim()}\nInterested in: ${data.get('service')}\n\n${data.get('message').trim()}\n\nI'd like to discuss a quotation for my project.`; window.open(`https://wa.me/94767773178?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer'); });
+document.querySelector('#year').textContent = new Date().getFullYear();
